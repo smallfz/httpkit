@@ -16,6 +16,7 @@ func simple(w http.ResponseWriter, code int, msg string) {
 	w.Write([]byte(msg))
 }
 
+// JSON writes value v as JSON to response body.
 func JSON(w http.ResponseWriter, code int, v interface{}) {
 	if dat, err := json.Marshal(v); err != nil {
 		http.Error(w, "json marshaling error.", 419)
@@ -25,6 +26,7 @@ func JSON(w http.ResponseWriter, code int, v interface{}) {
 	}
 }
 
+// Event writes a SSE entry.
 func Event(w http.ResponseWriter, event, data string) {
 	if len(event) > 0 {
 		fmt.Fprintf(w, "event: %s\r\n", event)

@@ -5,7 +5,7 @@ import (
 	"reflect"
 )
 
-// Bindable is the interface that a param should implements if it is needed to be inject to the bind func.
+// Bindable is the interface that a param should implement if it is needed to be inject to the bind func.
 // Example:
 //
 //	type Session struct{
@@ -18,7 +18,7 @@ import (
 //	    return nil
 //	}
 //
-// mux := http.NewServeMux()
+//	mux := http.NewServeMux()
 //
 //	mux.Handle("/restricted-res/", httpkit.F(func(s *Session) string {
 //	    return s.Uid

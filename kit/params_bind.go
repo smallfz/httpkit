@@ -13,7 +13,7 @@ type errEmpty struct {
 // var typError = reflect.TypeFor[error]()
 var typError = reflect.TypeOf(errEmpty{}).Field(0).Type
 
-// F is shortcut for BindFunc
+// F is just shortcut for BindFunc.
 func F(fn interface{}) http.HandlerFunc {
 	return BindFunc(fn)
 }
