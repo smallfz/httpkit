@@ -1,21 +1,21 @@
 package main
 
 import (
-    "net/http"
-    "github.com/smallfz/httpkit/kit"
+	"github.com/smallfz/httpkit/kit"
+	"net/http"
 )
 
 func home() string {
-    return "Hello!"
+	return "Hello!"
 }
 
 func main() {
-    mux := http.NewServeMux()
-    mux.HandleFunc("/", kit.F(home))
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", kit.F(home))
 
-    server := http.Server{
-        Addr: ":8080",
-        Handler: mux,
-    }
-    server.ListenAndServe()
+	server := http.Server{
+		Addr:    ":8080",
+		Handler: mux,
+	}
+	server.ListenAndServe()
 }

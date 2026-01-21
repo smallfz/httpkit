@@ -7,12 +7,41 @@ import (
 	"net/http"
 	"reflect"
 	"strconv"
+	"strings"
 )
 
 func simple(w http.ResponseWriter, code int, msg string) {
 	w.Header().Set("Cache-Control", "no-store")
 	w.WriteHeader(code)
 	w.Write([]byte(msg))
+}
+
+func JSON(w http.ResponseWriter, code int, v interface{}) {
+	if dat, err := json.Marshal(v); err != nil {
+		http.Error(w, "json marshaling error.", 419)
+		slog.Warn("json.Marshal:", "err", err)
+	} else {
+		w.Write(dat)
+	}
+}
+
+func Event(w http.ResponseWriter, event, data string) {
+	if len(event) > 0 {
+		fmt.Fprintf(w, "event: %s\r\n", event)
+	}
+	if strings.Index(data, "\n") >= 0 {
+		lines := strings.Split(data, "\n")
+		for i, line := range lines {
+			lines[i] = strings.Trim(line, "\r\n")
+			fmt.Fprintf(w, "data: %s\r\n", data)
+		}
+	} else {
+		fmt.Fprintf(w, "data: %s\r\n", data)
+	}
+	fmt.Fprintf(w, "\r\n")
+	if flusher, ok := w.(http.Flusher); ok {
+		flusher.Flush()
+	}
 }
 
 func WriteAsResponseAuto(w http.ResponseWriter, val reflect.Value) {
