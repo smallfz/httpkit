@@ -101,7 +101,7 @@ func DialWithOptions(uriStr string, options *DialOptions) (WSConn, error) {
 	hsAccept := base64.StdEncoding.EncodeToString(hsAckb[:])
 
 	// sending request
-	fmt.Fprintf(tx, "GET %s HTTP/1.1\r\n", uri.String())
+	fmt.Fprintf(tx, "GET %s HTTP/1.1\r\n", uri.RequestURI())
 	fmt.Fprintf(tx, "Host: %s\r\n", uri.Host)
 	fmt.Fprintf(tx, "User-Agent: %s\r\n", UserAgent)
 	fmt.Fprintf(tx, "Connection: Upgrade\r\n")

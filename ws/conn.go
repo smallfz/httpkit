@@ -241,9 +241,12 @@ func (f *wsConn) writeFrame(m *WSFrame) (int, error) {
 		mask := make([]byte, 4)
 		rand.Read(mask)
 		copy(header[len(header)-maskSize:], mask)
+
+		chunkMasked := make([]byte, len(chunk))
 		for i, v := range chunk {
-			chunk[i] = v ^ mask[i%4]
+			chunkMasked[i] = v ^ mask[i%4]
 		}
+		chunk = chunkMasked
 	}
 
 	chunkFin := make([]byte, len(header)+size)

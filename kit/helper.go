@@ -22,6 +22,9 @@ func JSON(w http.ResponseWriter, code int, v interface{}) {
 		http.Error(w, "json marshaling error.", 419)
 		slog.Warn("json.Marshal:", "err", err)
 	} else {
+		if code != 200 {
+			w.WriteHeader(code)
+		}
 		w.Write(dat)
 	}
 }
@@ -35,7 +38,7 @@ func Event(w http.ResponseWriter, event, data string) {
 		lines := strings.Split(data, "\n")
 		for i, line := range lines {
 			lines[i] = strings.Trim(line, "\r\n")
-			fmt.Fprintf(w, "data: %s\r\n", data)
+			fmt.Fprintf(w, "data: %s\r\n", line)
 		}
 	} else {
 		fmt.Fprintf(w, "data: %s\r\n", data)

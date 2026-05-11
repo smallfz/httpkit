@@ -50,7 +50,7 @@ func WebSocketHandshake(req *http.Request, w http.ResponseWriter) (WSConn, error
 	if len(wsProto) > 0 {
 		fmt.Fprintf(tx, "Sec-WebSocket-Protocol: %s\r\n", wsProto)
 	}
-	fmt.Fprintf(tx, "Sec-WebSocket-Version: 7\r\n")
+	fmt.Fprintf(tx, "Sec-WebSocket-Version: 13\r\n")
 	fmt.Fprintf(tx, "\r\n")
 	tx.Flush()
 
